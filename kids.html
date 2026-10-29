@@ -1,0 +1,563 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ffe9c7">
+<title>こぎつねの おねがい</title>
+<meta name="description" content="小学校低学年向け。王子の狐のむかし話をもとに、赤羽・東十条・王子の町を親子で歩くあそび（KITA IDEA NEXT 2026 応募用の企画試作）">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@600&family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+/*
+  Written for children in grades 1-3:
+  - kanji only where needed (place names and a few first-grade kanji), always with furigana
+  - short sentences with spaces between phrases, as in first-grade textbooks
+  - body text 20px or larger, buttons 64px or taller
+*/
+:root {
+  --cream: #fff8ec;
+  --sky-1: #bfe6ff;
+  --sky-2: #ffe9c7;
+  --ink: #2b2a4a;
+  --ink-soft: #55536f;
+  --orange: #f08a3c;
+  --red: #e0533c;
+  --green: #5aa66e;
+  --yellow: #ffd34d;
+  --card: #ffffff;
+  --line: #ecdcc4;
+  --round: "Zen Maru Gothic", "Hiragino Maru Gothic ProN", sans-serif;
+  --hand: "Klee One", "Hiragino Maru Gothic ProN", sans-serif;
+  --safe-b: env(safe-area-inset-bottom, 0px);
+}
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0; color: var(--ink); background: var(--cream);
+  font-family: var(--hand); font-weight: 600; font-size: 20px; line-height: 2.1; letter-spacing: 0.04em;
+  overflow-x: hidden; -webkit-font-smoothing: antialiased;
+  /* break lines only at the spaces between phrases, never inside a word */
+  word-break: keep-all; overflow-wrap: anywhere; line-break: strict;
+}
+svg { display: block; }
+button { font: inherit; color: inherit; }
+ruby rt { font-family: var(--round); font-weight: 700; font-size: 0.5em; letter-spacing: 0; color: var(--ink-soft); }
+.wrap { width: min(860px, 100% - 32px); margin-inline: auto; }
+section { padding: 72px 0; }
+.paused, .paused * { animation-play-state: paused !important; }
+
+h2 { font-family: var(--round); font-weight: 900; font-size: clamp(28px, 7vw, 40px); line-height: 1.5; margin: 0 0 24px; text-align: center; letter-spacing: 0.06em; }
+h2 .em { color: var(--red); }
+.lead { text-align: center; margin: 0 auto 28px; max-width: 24em; }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 64px; min-width: 200px; padding: 12px 32px; border-radius: 999px; border: none; cursor: pointer;
+  font-family: var(--round); font-weight: 900; font-size: 22px; letter-spacing: 0.08em; color: #fff; text-decoration: none;
+  background: var(--orange); box-shadow: 0 6px 0 #c9662a; transition: transform .1s ease, box-shadow .1s ease;
+}
+.btn:active { transform: translateY(5px); box-shadow: 0 1px 0 #c9662a; }
+.btn:focus-visible { outline: 4px solid var(--yellow); outline-offset: 4px; }
+.btn.red { background: var(--red); box-shadow: 0 6px 0 #a83826; }
+.btn.red:active { box-shadow: 0 1px 0 #a83826; }
+.btn[disabled] { background: #c9c3b6; box-shadow: 0 6px 0 #a59f92; cursor: default; }
+
+.reveal { opacity: 0; transform: translateY(20px); transition: opacity .8s ease, transform .8s ease; }
+.reveal.in { opacity: 1; transform: none; }
+
+/* ---------- top ---------- */
+.top { min-height: 100svh; display: grid; place-items: center; text-align: center; padding: 56px 0 64px; position: relative; overflow: hidden;
+  background: linear-gradient(180deg, var(--sky-1), var(--sky-2) 70%, var(--cream)); }
+.cloud { position: absolute; width: 140px; height: 44px; background: #fff; border-radius: 44px; opacity: .9; animation: drift 40s linear infinite; }
+.cloud::before, .cloud::after { content: ""; position: absolute; background: #fff; border-radius: 50%; }
+.cloud::before { width: 60px; height: 60px; left: 22px; top: -28px; }
+.cloud::after { width: 46px; height: 46px; left: 70px; top: -18px; }
+.c1 { top: 14%; left: -160px; } .c2 { top: 30%; left: -160px; animation-delay: -18s; animation-duration: 55s; transform: scale(.7); }
+@keyframes drift { to { left: 110%; } }
+.parent-link { position: absolute; top: 14px; right: 14px; font-family: var(--round); font-size: 14px; font-weight: 700; color: var(--ink-soft); background: rgba(255,255,255,.8); padding: 6px 14px; border-radius: 999px; text-decoration: none; }
+.mascot-wrap { position: relative; width: 210px; margin: 0 auto 8px; }
+.mascot { width: 210px; height: 210px; cursor: pointer; border: none; background: none; padding: 0; animation: bob 2.6s ease-in-out infinite; }
+.mascot.jump { animation: jump .6s ease; }
+@keyframes bob { 50% { transform: translateY(-8px); } }
+@keyframes jump { 30% { transform: translateY(-36px) rotate(-6deg); } 60% { transform: translateY(0) rotate(4deg); } }
+.bubble {
+  position: relative; display: inline-block; margin: 0 auto 10px; padding: 10px 22px; background: #fff; border-radius: 22px;
+  font-family: var(--round); font-weight: 700; font-size: 20px; box-shadow: 0 4px 0 var(--line); min-height: 52px;
+}
+.bubble::after { content: ""; position: absolute; left: 50%; bottom: -12px; margin-left: -10px; border: 10px solid transparent; border-top-color: #fff; border-bottom: 0; }
+.top h1 { font-family: var(--round); font-weight: 900; font-size: clamp(38px, 11vw, 64px); line-height: 1.3; margin: 8px 0 4px; letter-spacing: 0.08em; color: var(--ink); }
+.top h1 .o { color: var(--orange); }
+.top .sub { font-size: 18px; margin: 0 0 26px; color: var(--ink-soft); }
+
+/* ---------- picture book ---------- */
+.book { display: grid; gap: 26px; }
+.page {
+  background: var(--card); border-radius: 28px; padding: 18px 18px 24px; box-shadow: 0 6px 0 var(--line);
+  display: grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items: center;
+}
+.page svg { width: 100%; height: auto; border-radius: 20px; }
+.page p { margin: 0; font-size: 21px; }
+.page .num { font-family: var(--round); font-weight: 900; color: var(--orange); font-size: 16px; display: block; margin-bottom: 4px; }
+.page .say { color: var(--red); }
+.kf { animation: glow 2s ease-in-out infinite; }
+@keyframes glow { 50% { opacity: .45; } }
+
+/* ---------- letter ---------- */
+.envelope {
+  position: relative; width: min(340px, 100%); aspect-ratio: 16 / 10; margin: 0 auto; cursor: pointer; border: none; padding: 0;
+  background: #ffe3b8; border-radius: 16px; box-shadow: 0 8px 0 #e8c38e; display: block;
+}
+.envelope::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 56%; background: #ffd598; clip-path: polygon(0 0, 100% 0, 50% 100%); border-radius: 16px 16px 0 0; transition: transform .6s ease; transform-origin: top; }
+.envelope .seal { position: absolute; left: 50%; top: 56%; transform: translate(-50%, -50%); width: 64px; height: 64px; border-radius: 50%; background: var(--red); color: #fff; display: grid; place-items: center; font-family: var(--round); font-weight: 900; font-size: 16px; line-height: 1.2; box-shadow: 0 4px 0 #a83826; animation: pulse 1.8s ease-in-out infinite; }
+@keyframes pulse { 50% { transform: translate(-50%, -50%) scale(1.08); } }
+.envelope .to { position: absolute; left: 0; right: 0; bottom: 10%; font-size: 18px; text-align: center; margin: 0; }
+.envelope.open::before { transform: rotateX(180deg); }
+.envelope.open .seal { display: none; }
+.tap-hint { text-align: center; font-family: var(--round); font-weight: 700; font-size: 16px; color: var(--ink-soft); margin-top: 14px; }
+.letter {
+  display: none; margin: 22px auto 0; width: min(560px, 100%); background: #fffdf6; border-radius: 22px; padding: 26px 24px 28px;
+  box-shadow: 0 6px 0 var(--line); font-size: 21px; line-height: 2.2;
+  background-image: repeating-linear-gradient(180deg, transparent 0 2.15em, #f0e3cd 2.15em calc(2.15em + 2px));
+}
+.letter.show { display: block; animation: pop .5s ease; }
+@keyframes pop { from { opacity: 0; transform: scale(.94); } to { opacity: 1; transform: none; } }
+.letter p { margin: 0 0 .6em; }
+.letter .from { text-align: right; }
+.accept { text-align: center; margin-top: 26px; display: none; }
+.accept.show { display: block; }
+.thanks { text-align: center; font-family: var(--round); font-weight: 900; color: var(--red); font-size: 24px; min-height: 1.5em; margin-top: 16px; }
+
+/* ---------- towns ---------- */
+.towns { display: grid; gap: 26px; }
+.town { background: var(--card); border-radius: 28px; overflow: hidden; box-shadow: 0 6px 0 var(--line); }
+.town .scene { position: relative; }
+.town .scene svg { width: 100%; height: auto; }
+.town .hid { cursor: pointer; }
+.town .hid .hit { fill: transparent; }
+.town .hid use { transition: fill .3s ease; }
+.town .hid.found use { fill: var(--red); }
+.town .ring { opacity: 0; fill: rgba(255,211,77,.25); stroke: var(--yellow); stroke-width: 6; transition: opacity .3s ease; }
+.town .hid.found .ring { opacity: 1; }
+.town .body { padding: 18px 22px 24px; }
+.town .who { font-family: var(--round); font-weight: 700; font-size: 16px; color: var(--ink-soft); margin: 0; }
+.town h3 { font-family: var(--round); font-weight: 900; font-size: 30px; margin: 0 0 6px; letter-spacing: 0.06em; }
+.town h3 small { font-size: 18px; color: var(--orange); margin-left: 8px; }
+.town p { margin: 0 0 8px; }
+.mission { background: #fff4dd; border-radius: 16px; padding: 10px 16px; margin: 10px 0 0; }
+.mission b { font-family: var(--round); color: var(--red); }
+.game { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 14px; font-family: var(--round); font-weight: 700; font-size: 17px; }
+.game .count { display: flex; gap: 6px; }
+.game .count i { width: 28px; height: 28px; border-radius: 50%; border: 3px solid var(--line); display: inline-block; }
+.game .count i.on { background: var(--orange); border-color: var(--orange); }
+.game .star { font-size: 30px; color: var(--yellow); opacity: 0; transform: scale(.4); transition: opacity .4s ease, transform .4s cubic-bezier(.3,1.6,.5,1); -webkit-text-stroke: 1px #d9a400; }
+.town.clear .game .star { opacity: 1; transform: none; }
+
+/* ---------- how to play ---------- */
+.steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; counter-reset: s; }
+.step { background: var(--card); border-radius: 24px; padding: 18px 14px 20px; text-align: center; box-shadow: 0 6px 0 var(--line); position: relative; }
+.step::before { counter-increment: s; content: counter(s); position: absolute; top: -14px; left: 50%; margin-left: -20px; width: 40px; height: 40px; border-radius: 50%; background: var(--orange); color: #fff; font-family: var(--round); font-weight: 900; font-size: 22px; line-height: 40px; }
+.step svg { width: 72px; height: 72px; margin: 14px auto 8px; }
+.step p { margin: 0; font-size: 19px; line-height: 1.8; }
+
+/* ---------- promises ---------- */
+.promises { display: grid; gap: 14px; max-width: 620px; margin: 0 auto; padding: 0; list-style: none; }
+.promises li { display: flex; gap: 14px; align-items: center; background: var(--card); border-radius: 22px; padding: 14px 18px; box-shadow: 0 6px 0 var(--line); }
+.promises .ic { flex: 0 0 52px; height: 52px; border-radius: 50%; display: grid; place-items: center; background: #ffe9c7; font-size: 28px; }
+
+/* ---------- stamp book ---------- */
+.stamps { display: flex; justify-content: center; gap: clamp(12px, 5vw, 36px); flex-direction: row-reverse; }
+.stamp { width: 96px; text-align: center; font-family: var(--round); font-weight: 700; font-size: 15px; line-height: 1.4; }
+.stamp .seal { width: 92px; height: 92px; border-radius: 50%; border: 4px dashed #d8c7aa; display: grid; place-items: center; margin: 0 auto 8px; background: #fff; transition: all .5s cubic-bezier(.3,1.6,.5,1); }
+.stamp .seal svg { width: 58px; height: 58px; opacity: 0; transform: scale(.4) rotate(-20deg); transition: all .5s cubic-bezier(.3,1.6,.5,1); }
+.stamp.on .seal { border: 4px solid var(--red); background: #fff1ec; }
+.stamp.on .seal svg { opacity: 1; transform: rotate(-8deg); }
+.stamp-note { text-align: center; margin-top: 18px; font-family: var(--round); font-weight: 700; }
+
+/* ---------- confetti ---------- */
+.confetti { position: fixed; left: 0; top: 0; width: 14px; height: 14px; z-index: 50; pointer-events: none; border-radius: 3px; }
+
+/* ---------- for parents ---------- */
+.parents { background: #f3ead9; }
+.parents h2 { font-size: 24px; }
+.parents .box { background: #fff; border-radius: 20px; padding: 22px 22px 8px; font-family: "Hiragino Sans", "Yu Gothic", sans-serif; font-weight: 400; font-size: 15px; line-height: 1.9; letter-spacing: 0.02em; }
+.parents dl { display: grid; grid-template-columns: 7em 1fr; gap: 8px 14px; margin: 0 0 16px; }
+.parents dt { font-weight: 700; }
+.parents dd { margin: 0; }
+.parents p { margin: 0 0 14px; }
+.parents a { color: #b5461f; }
+footer { padding: 28px 0 calc(40px + var(--safe-b)); font-family: "Hiragino Sans", "Yu Gothic", sans-serif; font-weight: 400; font-size: 12px; color: #8a8597; line-height: 1.9; background: #f3ead9; }
+footer p { margin: 0 0 6px; }
+
+@media (max-width: 720px) {
+  .page { grid-template-columns: 1fr; }
+  .steps { grid-template-columns: 1fr 1fr; row-gap: 30px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition-duration: 0.01ms !important; }
+  .reveal { opacity: 1; transform: none; }
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="kit" viewBox="0 0 200 200">
+      <path d="M46 74 L58 16 L96 54 Z" fill="#f08a3c"/><path d="M154 74 L142 16 L104 54 Z" fill="#f08a3c"/>
+      <path d="M57 64 L63 32 L84 54 Z" fill="#ffd9b0"/><path d="M143 64 L137 32 L116 54 Z" fill="#ffd9b0"/>
+      <ellipse cx="100" cy="106" rx="70" ry="60" fill="#f39a4a"/>
+      <path d="M38 108 C52 150 80 166 100 166 C120 166 148 150 162 108 C140 128 120 132 100 132 C80 132 60 128 38 108 Z" fill="#fff4e2"/>
+      <ellipse cx="74" cy="100" rx="7" ry="9" fill="#2b2a4a"/><ellipse cx="126" cy="100" rx="7" ry="9" fill="#2b2a4a"/>
+      <circle cx="76.5" cy="96" r="2.5" fill="#fff"/><circle cx="128.5" cy="96" r="2.5" fill="#fff"/>
+      <ellipse cx="56" cy="122" rx="10" ry="6" fill="#ff8fa3" opacity=".6"/><ellipse cx="144" cy="122" rx="10" ry="6" fill="#ff8fa3" opacity=".6"/>
+      <ellipse cx="100" cy="128" rx="8" ry="6" fill="#2b2a4a"/>
+      <path d="M92 138 Q100 146 108 138" stroke="#2b2a4a" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <path d="M66 158 Q100 190 134 158 L128 150 Q100 172 72 150 Z" fill="#e0533c"/>
+    </symbol>
+    <symbol id="fox" viewBox="0 0 100 100"><path d="M20 47 L36 40 L34 18 L44 31 L50 17 L54 36 C60 44 60 54 54 62 C70 64 80 76 80 90 C86 82 92 72 98 64 C100 80 94 96 76 98 L36 98 C30 90 30 76 38 64 C32 60 26 54 20 47 Z"/></symbol>
+    <symbol id="paw" viewBox="0 0 60 60"><ellipse cx="30" cy="38" rx="13" ry="11"/><ellipse cx="15" cy="22" rx="5.5" ry="7"/><ellipse cx="25" cy="14" rx="5.5" ry="7"/><ellipse cx="36" cy="14" rx="5.5" ry="7"/><ellipse cx="46" cy="22" rx="5.5" ry="7"/></symbol>
+    <radialGradient id="fireG"><stop offset="0" stop-color="#fffbe6"/><stop offset=".4" stop-color="#ffd34d"/><stop offset="1" stop-color="#ffb84d" stop-opacity="0"/></radialGradient>
+  </defs>
+</svg>
+
+<main>
+  <!-- top -->
+  <section class="top" aria-label="こぎつねの おねがい">
+    <span class="cloud c1" aria-hidden="true"></span><span class="cloud c2" aria-hidden="true"></span>
+    <a class="parent-link" href="#parents">おうちの かたへ</a>
+    <div class="wrap">
+      <p class="bubble" id="bubble" aria-live="polite">こんにちは！</p>
+      <div class="mascot-wrap">
+        <button class="mascot" id="mascot" aria-label="こぎつねに さわる"><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#kit"/></svg></button>
+      </div>
+      <h1>こぎつねの<br><span class="o">おねがい</span></h1>
+      <p class="sub"><ruby>王子<rt>おうじ</rt></ruby>の きつねの おはなし</p>
+      <a class="btn" href="#mukashi">はじめる</a>
+    </div>
+  </section>
+
+  <!-- picture book -->
+  <section id="mukashi">
+    <div class="wrap">
+      <h2>むかし <span class="em">むかし</span></h2>
+      <div class="book">
+        <article class="page reveal">
+          <svg viewBox="0 0 400 260" aria-hidden="true">
+            <rect width="400" height="260" fill="#cfe9ff"/>
+            <circle cx="330" cy="60" r="30" fill="#fff3b0"/>
+            <path d="M0 200 Q200 170 400 200 V260 H0 Z" fill="#9fd39b"/>
+            <circle cx="120" cy="150" r="60" fill="#5aa66e"/><rect x="112" y="170" width="16" height="45" fill="#8a5a3c"/>
+            <use href="#fox" x="180" y="170" width="46" height="46" fill="#f08a3c"/>
+            <use href="#fox" x="240" y="180" width="38" height="38" fill="#f39a4a"/>
+            <use href="#fox" x="292" y="176" width="42" height="42" fill="#e9823a"/>
+          </svg>
+          <p><span class="num">1</span>むかし むかし、<ruby>王子<rt>おうじ</rt></ruby>の まちには、きつねが たくさん すんでいました。</p>
+        </article>
+        <article class="page reveal">
+          <svg viewBox="0 0 400 260" aria-hidden="true">
+            <rect width="400" height="260" fill="#2e3a6e"/>
+            <circle cx="70" cy="50" r="22" fill="#fff3b0"/>
+            <path d="M0 210 Q200 190 400 210 V260 H0 Z" fill="#26304f"/>
+            <circle cx="200" cy="120" r="80" fill="#1d4a3a"/><circle cx="140" cy="140" r="50" fill="#1d4a3a"/><circle cx="262" cy="138" r="54" fill="#1d4a3a"/>
+            <rect x="190" y="170" width="20" height="45" fill="#4a3424"/>
+            <circle class="kf" cx="120" cy="200" r="14" fill="url(#fireG)"/><circle class="kf" cx="170" cy="210" r="12" fill="url(#fireG)" style="animation-delay:.5s"/>
+            <circle class="kf" cx="240" cy="205" r="14" fill="url(#fireG)" style="animation-delay:1s"/><circle class="kf" cx="295" cy="212" r="11" fill="url(#fireG)" style="animation-delay:.3s"/>
+            <use href="#fox" x="140" y="196" width="30" height="30" fill="#f08a3c"/><use href="#fox" x="250" y="196" width="30" height="30" fill="#f08a3c"/>
+          </svg>
+          <p><span class="num">2</span><ruby>大<rt>おお</rt></ruby>みそかの よる、きつねたちは <ruby>大<rt>おお</rt></ruby>きな <ruby>木<rt>き</rt></ruby>の したに あつまって、ちいさな あかり「きつねび」を ともしました。</p>
+        </article>
+        <article class="page reveal">
+          <svg viewBox="0 0 400 260" aria-hidden="true">
+            <rect width="400" height="260" fill="#ffe9c7"/>
+            <path d="M0 210 H400 V260 H0 Z" fill="#e8c38e"/>
+            <use href="#fox" x="150" y="130" width="90" height="90" fill="#f08a3c"/>
+            <use href="#fox" x="250" y="170" width="50" height="50" fill="#f6b27a" transform="scale(-1 1) translate(-550 0)"/>
+            <text x="120" y="90" font-family="Zen Maru Gothic, sans-serif" font-size="40" font-weight="900" fill="#e0533c">？</text>
+          </svg>
+          <p><span class="num">3</span>ある <ruby>日<rt>ひ</rt></ruby>、おかあさん ぎつねが にんげんに いたずらを されて しまいました。<br><span class="say">「にんげんとは なかよく しちゃ だめよ」</span></p>
+        </article>
+        <article class="page reveal">
+          <svg viewBox="0 0 400 260" aria-hidden="true">
+            <rect width="400" height="260" fill="#cfe9ff"/>
+            <path d="M0 210 Q200 196 400 210 V260 H0 Z" fill="#9fd39b"/>
+            <use href="#kit" x="130" y="60" width="140" height="140"/>
+            <text x="270" y="80" font-family="Zen Maru Gothic, sans-serif" font-size="44" font-weight="900" fill="#ffb84d">！</text>
+          </svg>
+          <p><span class="num">4</span>こぎつねは かんがえました。<br><span class="say">「ほんとうかな？ やさしい にんげんも いるんじゃないかな」</span></p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- letter -->
+  <section id="tegami">
+    <div class="wrap">
+      <h2>こぎつねから<br><span class="em">おてがみ</span>が とどいたよ</h2>
+      <button class="envelope reveal" id="envelope" aria-label="おてがみを ひらく"><span class="seal">ひらく</span><span class="to">にんげんの きみへ</span></button>
+      <p class="tap-hint" id="tapHint">おてがみを タッチしてね</p>
+      <div class="letter" id="letter">
+        <p>にんげんの きみへ</p>
+        <p>ぼくは こぎつね。やさしい にんげんを さがして いるんだ。</p>
+        <p><ruby>赤羽<rt>あかばね</rt></ruby>、<ruby>東十条<rt>ひがしじゅうじょう</rt></ruby>、<ruby>王子<rt>おうじ</rt></ruby>。3つの まちで、ぼくの ともだちが まって いるよ。</p>
+        <p>まちの おみせで「あいことば」を いうと、ぼくの てがみが もらえるよ。</p>
+        <p>いっしょに さがしに いこう！</p>
+        <p class="from">こぎつねより</p>
+      </div>
+      <div class="accept" id="accept"><button class="btn red" id="acceptBtn">いいよ！ てつだう</button></div>
+      <p class="thanks" id="thanks" aria-live="polite"></p>
+    </div>
+  </section>
+
+  <!-- towns -->
+  <section id="machi">
+    <div class="wrap">
+      <h2>3つの まちの <span class="em">ともだち</span></h2>
+      <p class="lead">えの なかに ちいさな きつねが 3びき かくれて いるよ。みつけたら タッチしてね！</p>
+      <div class="towns">
+
+        <article class="town reveal" data-town="akabane">
+          <div class="scene">
+            <svg viewBox="0 0 400 240" role="img" aria-label="あかばねの まち。きつねが かくれて いる え">
+              <rect width="400" height="240" fill="#cfe9ff"/>
+              <g fill="#f6d7b0"><rect x="10" y="80" width="50" height="100"/><rect x="70" y="60" width="44" height="120"/><rect x="290" y="70" width="46" height="110"/><rect x="345" y="96" width="44" height="84"/></g>
+              <g fill="#fff"><rect x="20" y="92" width="10" height="12"/><rect x="40" y="92" width="10" height="12"/><rect x="80" y="74" width="10" height="12"/><rect x="96" y="74" width="10" height="12"/><rect x="300" y="84" width="10" height="12"/><rect x="318" y="84" width="10" height="12"/></g>
+              <path d="M120 180 Q200 110 280 180 Z" fill="#9fd39b"/>
+              <use href="#fox" x="178" y="118" width="50" height="50" fill="#e0533c"/>
+              <rect x="0" y="180" width="400" height="16" fill="#b9e0a8"/>
+              <rect x="0" y="196" width="400" height="44" fill="#7a6a5a"/>
+              <rect x="10" y="204" width="380" height="28" rx="14" fill="#5a4c40"/>
+              <g><rect x="60" y="208" width="120" height="20" rx="10" fill="#58b368"/><rect x="70" y="212" width="14" height="10" fill="#e8f7ff"/><rect x="92" y="212" width="14" height="10" fill="#e8f7ff"/><rect x="114" y="212" width="14" height="10" fill="#e8f7ff"/></g>
+              <g class="hid" tabindex="0" role="button" aria-label="かくれている きつね"><circle class="hit" cx="42" cy="168" r="30"/><circle class="ring" cx="42" cy="168" r="24"/><use href="#fox" x="30" y="156" width="24" height="24" fill="#e2c09a"/></g>
+              <g class="hid" tabindex="0" role="button" aria-label="かくれている きつね"><circle class="hit" cx="325" cy="58" r="30"/><circle class="ring" cx="325" cy="58" r="24"/><use href="#fox" x="314" y="46" width="22" height="22" fill="#c7e2f5"/></g>
+              <g class="hid" tabindex="0" role="button" aria-label="かくれている きつね"><circle class="hit" cx="262" cy="166" r="30"/><circle class="ring" cx="262" cy="166" r="24"/><use href="#fox" x="250" y="154" width="24" height="24" fill="#8fc78b"/></g>
+            </svg>
+          </div>
+          <div class="body">
+            <p class="who">あかい きつねの「あかまる」が まって いるよ</p>
+            <h3><ruby>赤羽<rt>あかばね</rt></ruby><small>あかい きつね</small></h3>
+            <p>あかまるは、よく <ruby>見<rt>み</rt></ruby>る こが すき。じめんの したを はしる でんしゃの おとを いつも きいて いるよ。</p>
+            <p class="mission"><b>おねがい</b>　まちで あかい ものを さがそう</p>
+            <div class="game"><span>かくれきつね</span><span class="count"><i></i><i></i><i></i></span><span class="star" aria-hidden="true">★</span></div>
+          </div>
+        </article>
+
+        <article class="town reveal" data-town="higashijujo">
+          <div class="scene">
+            <svg viewBox="0 0 400 240" role="img" aria-label="ひがしじゅうじょうの まち。きつねが かくれて いる え">
+              <rect width="400" height="240" fill="#d8f0ff"/>
+              <rect x="190" y="110" width="22" height="100" fill="#8a5a3c"/>
+              <polygon points="201,20 140,100 262,100" fill="#3f8f5a"/><polygon points="201,60 128,140 274,140" fill="#367f50"/><polygon points="201,100 116,180 286,180" fill="#2f7046"/>
+              <rect x="300" y="150" width="26" height="56" rx="4" fill="#b8b8c8"/>
+              <path d="M0 200 Q200 186 400 200 V240 H0 Z" fill="#9fd39b"/>
+              <path d="M0 222 q20 -8 40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0" stroke="#7ab8e8" stroke-width="4" fill="none"/>
+              <use href="#fox" x="96" y="160" width="46" height="46" fill="#a9a9b9"/>
+              <g class="hid" tabindex="0" role="button" aria-label="かくれている きつね"><circle class="hit" cx="200" cy="80" r="30"/><circle class="ring" cx="200" cy="80" r="24"/><use href="#fox" x="189" y="69" width="22" height="22" fill="#4f9f68"/></g>
+              <g class="hid" tabindex="0" role="button" aria-label="かくれている きつね"><circle class="hit" cx="313" cy="140" r="30"/><circle class="ring" cx="313" cy="140" r="24"/><use href="#fox" x="302" y="128" width="22" height="22" fill="#c7d6e2"/></g>
+              <g class="hid" tabindex="0" role="button" aria-label="かくれている きつね"><circle class="hit" cx="40" cy="40" r="30"/><circle class="ring" cx="40" cy="40" r="24"/><use href="#fox" x="29" y="29" width="22" height="22" fill="#c0e2f7"/></g>
+            </svg>
+          </div>
+          <div class="body">
+            <p class="who">おじいさん ぎつねの「すぎじい」が まって いるよ</p>
+            <h3><ruby>東十条<rt>ひがしじゅうじょう</rt></ruby><small>すぎの <ruby>木<rt>き</rt></ruby></small></h3>
+            <p>むかし、ちいさな えだが <ruby>大<rt>おお</rt></ruby>きな すぎの <ruby>木<rt>き</rt></ruby>に なったんだって。すぎじいは、やくそくを まもる こが すき。</p>
+            <p class="mission"><b>おねがい</b>　やくそくの ことばを さがそう</p>
+            <div class="game"><span>かくれきつね</span><span class="count"><i></i><i></i><i></i></span><span class="star" aria-hidden="true">★</span></div>
+          </div>
+        </article>
+
+        <article class="town reveal" data-town="oji">
+          <div class="scene">
+            <svg viewBox="0 0 400 240" role="img" aria-label="おうじの まち。きつねが かくれて いる え">
+              <rect width="400" height="240" fill="#ffe1c2"/>
+              <circle cx="60" cy="50" r="24" fill="#fff3b0"/>
+              <rect x="194" y="120" width="24" height="90" fill="#7a5034"/>
+              <circle cx="206" cy="90" r="74" fill="#3f8f5a"/><circle cx="140" cy="110" r="50" fill="#3f8f5a"/><circle cx="272" cy="108" r="54" fill="#3f8f5a"/>
+              <path d="M0 204 Q200 190 400 204 V240 H0 Z" fill="#e8c38e"/>
+              <circle class="kf" cx="150" cy="196" r="12" fill="url(#fireG)"/><circle class="kf" cx="262" cy="198" r="12" fill="url(#fireG)" style="animation-delay:.6s"/>
+              <use href="#kit" x="182" y="150" width="54" height="54"/>
+              <line x1="330" y1="120" x2="330" y2="150" stroke="#7a5034" stroke-width="3"/><ellipse cx="330" cy="166" rx="16" ry="20" fill="#e0533c"/>
+              <g class="hid" tabindex="0" role="button" aria-label="かくれている きつね"><circle class="hit" cx="120" cy="96" r="30"/><circle class="ring" cx="120" cy="96" r="24"/><use href="#fox" x="109" y="85" width="22" height="22" fill="#4f9f68"/></g>
+              <g class="hid" tabindex="0" role="button" aria-label="かくれている きつね"><circle class="hit" cx="372" cy="214" r="30"/><circle class="ring" cx="372" cy="214" r="24"/><use href="#fox" x="361" y="203" width="22" height="22" fill="#d9b07a"/></g>
+              <g class="hid" tabindex="0" role="button" aria-label="かくれている きつね"><circle class="hit" cx="300" cy="40" r="30"/><circle class="ring" cx="300" cy="40" r="24"/><use href="#fox" x="289" y="29" width="22" height="22" fill="#ffd0a6"/></g>
+            </svg>
+          </div>
+          <div class="body">
+            <p class="who">こぎつねが <ruby>大<rt>おお</rt></ruby>きな <ruby>木<rt>き</rt></ruby>の したで まって いるよ</p>
+            <h3><ruby>王子<rt>おうじ</rt></ruby><small>えのきの <ruby>木<rt>き</rt></ruby></small></h3>
+            <p>きつねは いたずらが だいすき。ヒントの なかに、ひとつだけ まちがいが まざって いるよ。</p>
+            <p class="mission"><b>おねがい</b>　まちがいを ひとつ みつけよう</p>
+            <div class="game"><span>かくれきつね</span><span class="count"><i></i><i></i><i></i></span><span class="star" aria-hidden="true">★</span></div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- how to play -->
+  <section id="asobikata">
+    <div class="wrap">
+      <h2><span class="em">あそびかた</span></h2>
+      <div class="steps">
+        <div class="step reveal"><svg viewBox="0 0 72 72" aria-hidden="true"><rect x="12" y="14" width="48" height="44" rx="6" fill="#ffe3b8"/><path d="M36 16 V56" stroke="#e8c38e" stroke-width="3"/><path d="M18 26 H30 M18 34 H30 M42 26 H54 M42 34 H54" stroke="#55536f" stroke-width="3" stroke-linecap="round"/></svg><p>おはなしを<br>よむ</p></div>
+        <div class="step reveal"><svg viewBox="0 0 72 72" aria-hidden="true"><circle cx="31" cy="31" r="16" fill="#cfe9ff" stroke="#55536f" stroke-width="4"/><path d="M43 43 L58 58" stroke="#55536f" stroke-width="6" stroke-linecap="round"/></svg><p>まちを あるいて<br>ヒントを さがす</p></div>
+        <div class="step reveal"><svg viewBox="0 0 72 72" aria-hidden="true"><path d="M10 14 H50 V40 H28 L18 50 V40 H10 Z" fill="#fff4dd" stroke="#55536f" stroke-width="3" stroke-linejoin="round"/><text x="30" y="33" text-anchor="middle" font-size="16" font-family="Zen Maru Gothic, sans-serif" font-weight="900" fill="#e0533c">？</text><use href="#kit" x="38" y="34" width="32" height="32"/></svg><p>おみせで<br>あいことばを いう</p></div>
+        <div class="step reveal"><svg viewBox="0 0 72 72" aria-hidden="true"><rect x="12" y="20" width="40" height="30" rx="4" fill="#ffe3b8"/><path d="M12 20 L32 36 L52 20" fill="none" stroke="#e8c38e" stroke-width="3"/><circle cx="54" cy="48" r="13" fill="#e0533c"/><use href="#paw" x="46" y="40" width="16" height="16" fill="#fff"/></svg><p>てがみと シールが<br>もらえる！</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- promises -->
+  <section id="yakusoku">
+    <div class="wrap">
+      <h2>たんけんの <span class="em">やくそく</span></h2>
+      <ul class="promises">
+        <li class="reveal"><span class="ic" aria-hidden="true">👨‍👧</span><span>おうちの ひとと いっしょに いこう</span></li>
+        <li class="reveal"><span class="ic" aria-hidden="true">✋</span><span>ヒントを よむ ときは、とまって よもう</span></li>
+        <li class="reveal"><span class="ic" aria-hidden="true">🚸</span><span>みちを あるく ときは、まえを <ruby>見<rt>み</rt></ruby>よう</span></li>
+        <li class="reveal"><span class="ic" aria-hidden="true">🙇</span><span>おみせの ひとに「ありがとう」を いおう</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- stamp book -->
+  <section id="hanko">
+    <div class="wrap">
+      <h2>はんこを <span class="em">あつめよう</span></h2>
+      <p class="lead">おみせで あいことばを いうと、はんこが もらえるよ。3つ あつめると……？</p>
+      <div class="stamps">
+        <div class="stamp" data-machi="akabane"><div class="seal"><svg viewBox="0 0 60 60" aria-hidden="true"><use href="#paw" fill="#e0533c"/></svg></div><ruby>赤羽<rt>あかばね</rt></ruby></div>
+        <div class="stamp" data-machi="higashijujo"><div class="seal"><svg viewBox="0 0 60 60" aria-hidden="true"><use href="#paw" fill="#e0533c"/></svg></div><ruby>東十条<rt>ひがしじゅうじょう</rt></ruby></div>
+        <div class="stamp" data-machi="oji"><div class="seal"><svg viewBox="0 0 60 60" aria-hidden="true"><use href="#paw" fill="#e0533c"/></svg></div><ruby>王子<rt>おうじ</rt></ruby></div>
+      </div>
+      <p class="stamp-note" id="stampNote" aria-live="polite">まだ はんこは ないよ</p>
+    </div>
+  </section>
+
+  <!-- for parents -->
+  <section class="parents" id="parents">
+    <div class="wrap">
+      <h2>おうちの方へ</h2>
+      <div class="box">
+        <p>北区・王子に伝わる狐の話をもとにした、親子で町を歩く謎解きあそびです。小学校低学年のお子さま向けに、漢字にふりがなをつけ、短い文で書いています。</p>
+        <dl>
+          <dt>対象</dt><dd>小学生と保護者の方（小学生だけでの参加はご遠慮ください）</dd>
+          <dt>日程</dt><dd>2027年2月20日〜3月28日（予定）</dd>
+          <dt>場所</dt><dd>赤羽・東十条・王子の駅周辺</dd>
+          <dt>所要時間</dt><dd>ひとつの町で60〜90分ほど。途中でやめて、別の日に続きから遊べます</dd>
+          <dt>参加費</dt><dd>無料（予定）</dd>
+          <dt>持ち物</dt><dd>スマートフォンか紙の冊子、歩きやすい靴</dd>
+          <dt>安全</dt><dd>手がかりは商店街と、道から見える場所に置きます。タイムは競いません。階段を使わない道順も用意します</dd>
+          <dt>記録</dt><dd>このページで見つけたきつねやはんこの記録は、お使いの端末の中にだけ残ります。お子さまの名前や写真は集めません</dd>
+        </dl>
+        <p>大人向けの物語のページは <a href="index.html">こちら（子狐の初午）</a>。</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>このページは、北区アイデアコンテスト「KITA IDEA NEXT 2026」への応募にあわせて作った企画の試作です。北区および関係機関の公式ページではありません。日程・会場・協力店は構想段階で、関係する方々への相談はこれからです。</p>
+    <p>大晦日の狐火の言い伝えと、落語「王子の狐」をもとにしています。こぎつねの手紙から先のお話は、このあそびのための創作です。</p>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const store = {
+    get(k, d) { try { const v = localStorage.getItem('kitsune.' + k); return v === null ? d : JSON.parse(v); } catch { return d; } },
+    set(k, v) { try { localStorage.setItem('kitsune.' + k, JSON.stringify(v)); } catch {} },
+  };
+  const buzz = (ms) => { try { navigator.vibrate && navigator.vibrate(ms); } catch {} };
+
+  /* confetti from a point */
+  const burst = (x, y, n = 18) => {
+    if (reduce) return;
+    const colors = ['#f08a3c', '#e0533c', '#ffd34d', '#5aa66e', '#7ab8e8'];
+    for (let i = 0; i < n; i++) {
+      const d = document.createElement('span'); d.className = 'confetti'; d.style.background = colors[i % colors.length];
+      document.body.appendChild(d);
+      const a = Math.random() * Math.PI * 2, r = 60 + Math.random() * 90;
+      d.animate([
+        { transform: `translate(${x}px,${y}px) rotate(0)`, opacity: 1 },
+        { transform: `translate(${x + Math.cos(a) * r}px,${y + Math.sin(a) * r + 80}px) rotate(${Math.random() * 540}deg)`, opacity: 0 },
+      ], { duration: 900 + Math.random() * 400, easing: 'cubic-bezier(.2,.7,.4,1)' }).onfinish = () => d.remove();
+    }
+  };
+
+  /* greeting by the time of day */
+  const hour = +new Intl.DateTimeFormat('en-US', { timeZone: 'Asia/Tokyo', hour: 'numeric', hourCycle: 'h23' }).format(new Date());
+  const hello = hour < 10 && hour >= 4 ? 'おはよう！' : hour < 16 ? 'こんにちは！' : hour < 19 ? 'ゆうがただね。きつねが おきる じかんだよ' : 'こんばんは！ きつねびが きれいだよ';
+  const visits = store.get('kids.visits', 0) + 1; store.set('kids.visits', visits);
+  $('bubble').textContent = visits >= 2 ? 'また きてくれたの？ うれしいな！' : hello;
+
+  /* the mascot */
+  const talk = ['こんにちは！', 'ぼく、こぎつね！', 'いっしょに あそぼう', 'きつねびって しってる？', 'くすぐったいよ〜', 'こん！'];
+  let ti = 0;
+  $('mascot').addEventListener('click', (e) => {
+    const m = $('mascot'); m.classList.remove('jump'); void m.offsetWidth; m.classList.add('jump');
+    ti = (ti + 1) % talk.length; $('bubble').textContent = talk[ti]; buzz(10);
+    const b = m.getBoundingClientRect(); burst(b.left + b.width / 2, b.top + 40, 8);
+  });
+
+  /* reveal & pause what is off screen */
+  const io = new IntersectionObserver((es) => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .15 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  const pio = new IntersectionObserver((es) => es.forEach(e => e.target.classList.toggle('paused', !e.isIntersecting)), { rootMargin: '100px 0px' });
+  document.querySelectorAll('main > section').forEach(el => pio.observe(el));
+
+  /* letter */
+  const env = $('envelope');
+  const openLetter = () => {
+    if (env.classList.contains('open')) return;
+    env.classList.add('open'); $('tapHint').textContent = ''; buzz(12);
+    setTimeout(() => { $('letter').classList.add('show'); $('accept').classList.add('show'); }, reduce ? 0 : 500);
+    store.set('kids.letter', true);
+  };
+  env.addEventListener('click', openLetter);
+  if (store.get('kids.accept', false)) { $('acceptBtn').textContent = 'てつだって くれて ありがとう'; $('acceptBtn').disabled = true; }
+  $('acceptBtn').addEventListener('click', (e) => {
+    store.set('kids.accept', true);
+    const b = e.currentTarget.getBoundingClientRect(); burst(b.left + b.width / 2, b.top, 26); buzz(30);
+    $('thanks').textContent = 'ありがとう！ まちで まってるね！';
+    e.currentTarget.textContent = 'てつだって くれて ありがとう'; e.currentTarget.disabled = true;
+  });
+
+  /* hidden foxes */
+  document.querySelectorAll('.town').forEach(town => {
+    const key = 'kids.found.' + town.dataset.town, found = new Set(store.get(key, []));
+    const hids = [...town.querySelectorAll('.hid')], dots = [...town.querySelectorAll('.count i')];
+    const paint = () => {
+      hids.forEach((h, i) => h.classList.toggle('found', found.has(i)));
+      dots.forEach((d, i) => d.classList.toggle('on', i < found.size));
+      town.classList.toggle('clear', found.size === hids.length);
+    };
+    hids.forEach((h, i) => {
+      const hit = (e) => {
+        if (found.has(i)) return;
+        found.add(i); store.set(key, [...found]); paint(); buzz(15);
+        const r = h.getBoundingClientRect(); burst(r.left + r.width / 2, r.top + r.height / 2, found.size === hids.length ? 30 : 10);
+      };
+      h.addEventListener('click', hit);
+      h.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); hit(); } });
+    });
+    paint();
+  });
+
+  /* stamps: given at the password shops (QR with ?machi=...) */
+  const MACHI = { akabane: 'あかばね', higashijujo: 'ひがしじゅうじょう', oji: 'おうじ' };
+  const got = store.get('machi', []);
+  const m = new URLSearchParams(location.search).get('machi');
+  if (m && MACHI[m] && !got.includes(m)) { got.push(m); store.set('machi', got); history.replaceState(null, '', location.pathname); }
+  document.querySelectorAll('.stamp').forEach(s => s.classList.toggle('on', got.includes(s.dataset.machi)));
+  $('stampNote').textContent = got.length === 0 ? 'まだ はんこは ないよ'
+    : got.length < 3 ? `${got.map(k => MACHI[k]).join('と ')}の はんこが あるよ。あと ${3 - got.length}つ！`
+    : 'ぜんぶ あつまった！ こぎつねが よろこんで いるよ！';
+  if (m && MACHI[m]) setTimeout(() => { document.getElementById('hanko').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' }); setTimeout(() => { const s = document.querySelector(`.stamp[data-machi="${m}"]`).getBoundingClientRect(); burst(s.left + s.width / 2, s.top + 40, 24); }, 900); }, 600);
+})();
+</script>
+</body>
+</html>
