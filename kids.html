@@ -450,7 +450,7 @@ footer p { margin: 0 0 6px; }
           <dt>安全</dt><dd>手がかりは商店街と、道から見える場所に置きます。タイムは競いません。階段を使わない道順も用意します</dd>
           <dt>記録</dt><dd>このページで見つけたきつねやはんこの記録は、お使いの端末の中にだけ残ります。お子さまの名前や写真は集めません</dd>
         </dl>
-        <p>大人向けの物語のページは <a href="index.html">こちら（子狐の初午）</a>。</p>
+        <p>大人向けの物語のページは <a href="adult.html">こちら（子狐の初午）</a>。おとな向け・こども向けは <a href="./?choose">はじめの画面</a> から選びなおせます。</p>
       </div>
     </div>
   </section>
@@ -464,6 +464,7 @@ footer p { margin: 0 0 6px; }
 </footer>
 
 <script>
+  try { localStorage.setItem('kitsune-lp-choice', 'kids'); } catch {}
 (() => {
   const $ = (id) => document.getElementById(id);
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
