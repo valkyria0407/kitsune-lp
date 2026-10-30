@@ -327,7 +327,7 @@ html.sumi .wall { background: repeating-linear-gradient(90deg, rgba(0,0,0,0.06) 
 .card-out a { color: var(--gold); }
 
 /* ---------- volumes ---------- */
-.volumes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 52px; direction: rtl; }
+.volumes { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; width: min(640px, 100%); margin-left: auto; margin-right: auto; margin-top: 52px; direction: rtl; }
 .vol { direction: ltr; position: relative; min-height: 300px; padding: 34px 24px; border-radius: 4px; text-align: center; background: linear-gradient(180deg, #2b2032, #17121f); border: 1px solid var(--line); overflow: hidden; }
 .vol .no { font-size: 12px; letter-spacing: 0.4em; color: var(--ink-faint); margin: 0 0 10px; }
 .vol h3 { font-family: var(--brush); font-weight: 400; font-size: 26px; letter-spacing: 0.14em; margin: 0 0 6px; }
@@ -755,17 +755,8 @@ footer a { color: var(--ink-dim); }
       <h2 class="mark tell">物語は、季節とともに</h2>
       <div class="volumes">
         <article class="vol now tell"><p class="no">第一の巻</p><h3>子狐の初午</h3><p class="season">早春</p><p>赤羽・東十条・王子。<br>人間を信じなくなった狐に、<br>もう一度、信じてもらう。</p><span class="here">― いま、ここ ―</span></article>
-        <article class="vol sealed tell" id="vol2"><p class="no">第二の巻</p><h3 data-title="河童の夏">？？？</h3><p class="season">夏</p><span class="fuin" aria-hidden="true">封</span><p class="teaser">荒川のほとりで、だれかが狐のうわさを聞いている。</p></article>
-        <article class="vol sealed tell"><p class="no">第三の巻</p><h3>？？？</h3><p class="season">冬</p><span class="fuin" aria-hidden="true">封</span></article>
+        <article class="vol sealed tell" id="vol2"><p class="no">第二の巻</p><h3 data-title="狐火の大晦日">？？？</h3><p class="season">冬</p><span class="fuin" aria-hidden="true">封</span></article>
       </div>
-    </div>
-  </section>
-
-  <!-- writers -->
-  <section class="scene center" id="kakite">
-    <div class="wrap">
-      <h2 class="mark tell">物語のつづきを、書く人間を</h2>
-      <div class="narr tell"><p>子狐は、もうひとつ、ひそかに願っている。</p><p>いつか、謎を解いた人間が、<br>自分の町の話を書いてくれることを。</p><p>北区には、まだ語られていない町が、たくさんある。</p></div>
     </div>
   </section>
 
